@@ -1,98 +1,22 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سایت من</title>
+    <title>CRT Display</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet"
-        type="text/css" />
 </head>
 
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#home">خانه</a></li>
-                <li><a href="#blog">وبلاگ</a></li>
-                <li><a href="#about">درباره ما</a></li>
-                <li><a href="#contact">تماس با ما</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section id="home" class="hero">
-            <h1>به سایت من خوش آمدید!</h1>
-            <p>این یک سایت ساده برای تست گیت‌هاب پیج است.</p>
-        </section>
-
-        <section id="blog" class="blog">
-            <h2>آخرین مطالب</h2>
-            <div class="blog-posts">
-                <article class="blog-post">
-                    <h3>عنوان مطلب اول</h3>
-                    <p class="post-date">۲۱ اردیبهشت ۱۴۰۳</p>
-                    <p class="post-excerpt">این یک خلاصه از مطلب اول است. می‌توانید متن کامل را در ادامه بخوانید...</p>
-                    <a href="#" class="read-more">ادامه مطلب</a>
-                </article>
-
-                <article class="blog-post">
-                    <h3>عنوان مطلب دوم</h3>
-                    <p class="post-date">۲۰ اردیبهشت ۱۴۰۳</p>
-                    <p class="post-excerpt">این یک خلاصه از مطلب دوم است. می‌توانید متن کامل را در ادامه بخوانید...</p>
-                    <a href="#" class="read-more">ادامه مطلب</a>
-                </article>
-            </div>
-        </section>
-
-        <section id="about" class="about">
-            <h2>درباره ما</h2>
-            <p>ما یک تیم متخصص هستیم که در زمینه طراحی وب فعالیت می‌کنیم.</p>
-        </section>
-
-        <section id="contact" class="contact">
-            <h2>تماس با ما</h2>
-            <form>
-                <input type="text" placeholder="نام شما">
-                <input type="email" placeholder="ایمیل">
-                <textarea placeholder="پیام شما"></textarea>
-                <button type="submit">ارسال</button>
-            </form>
-        </section>
-    </main>
-
-    <footer>
-        <p>تمامی حقوق محفوظ است &copy; ۱۴۰۳</p>
-    </footer>
-
     <div class="crt">
         <div class="scanlines"></div>
-        <div class="content">[Your Terminal Content]</div>
-    </div>
-
-    <div class="switch-button">
-        <div class="switch-outer" id="switchOuter">
-            <input id="switch" type="checkbox" />
+        <div class="content">
+            <h1>Welcome to CRT Display</h1>
+            <p>This is a retro CRT monitor effect.</p>
         </div>
     </div>
-
-    <script>
-        const switchOuter = document.getElementById('switchOuter');
-
-        switchOuter.addEventListener('click', () => {
-            switchOuter.classList.add('active');
-
-            // حذف کلاس active پس از اتمام انیمیشن (اختیاری)
-            setTimeout(() => {
-                switchOuter.classList.remove('active');
-            }, 500); // مدت زمان انیمیشن wave
-        });
-    </script>
-
     <script src="crt.js"></script>
-
 </body>
 
 </html>
