@@ -1,18 +1,25 @@
-// CRT effect JS: flicker and glow
-document.addEventListener('DOMContentLoaded', () => {
-    const crtContent = document.querySelector('.crt .content');
+// CRT Display Effects
+document.addEventListener('DOMContentLoaded', function () {
+    // Add scanlines animation
     const scanlines = document.querySelector('.scanlines');
-
-    if (!crtContent || !scanlines) return;
+    if (scanlines) {
+        scanlines.classList.add('animated');
+    }
 
     // Add flicker effect
-    setInterval(() => {
-        crtContent.style.opacity = 0.97 + Math.random() * 0.03;
-    }, 60);
+    const crt = document.querySelector('.crt');
+    if (crt) {
+        setInterval(() => {
+            const flicker = Math.random() * 0.1;
+            crt.style.opacity = 0.9 + flicker;
+        }, 50);
+    }
 
-    // Add subtle green glow
-    crtContent.style.boxShadow = '0 0 20px 2px #00ff00, 0 0 40px 4px #00ff0044';
-
-    // Add scanlines animation
-    scanlines.classList.add('animated');
-}); 
+    // Add cursor blink effect
+    const cursor = document.querySelector('.cursor');
+    if (cursor) {
+        setInterval(() => {
+            cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
+        }, 500);
+    }
+});
