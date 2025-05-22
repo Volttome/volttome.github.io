@@ -1,11 +1,16 @@
 /* CRT Display Styles */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
 body {
     background-color: #000;
     color: #00ff00;
     font-family: 'Courier New', monospace;
-    margin: 0;
     padding: 20px;
-    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,10 +22,11 @@ body {
     padding: 20px;
     border-radius: 5px;
     position: relative;
-    width: 80%;
-    max-width: 800px;
-    box-shadow: 0 0 20px 2px #00ff00;
-    animation: flicker 0.15s infinite;
+    width: 90%;
+    max-width: 900px;
+    box-shadow: 0 0 10px 1px #00ff00;
+    animation: flicker 0.001s infinite;
+    overflow: hidden;
 }
 
 .content {
@@ -36,7 +42,7 @@ body {
     bottom: 0;
     background: linear-gradient(to bottom,
             transparent 50%,
-            rgba(0, 0, 0, 0.5) 50%);
+            rgba(0, 0, 0, 0.25) 50%);
     background-size: 100% 4px;
     pointer-events: none;
     z-index: 2;
@@ -65,11 +71,28 @@ p {
 .menu-item {
     margin: 10px 0;
     cursor: pointer;
-    transition: color 0.3s;
+    display: flex;
+    align-items: center;
 }
 
-.menu-item:hover {
+.menu-item span {
+    transition: color 0.5s;
+}
+
+.menu-item:hover span {
     color: #fff;
+}
+
+.menu-item::before {
+    content: "►";
+    margin-right: 5px;
+    transition: transform 1s;
+    display: inline-block;
+}
+
+.menu-item:hover::before {
+    content: "►";
+    transform: rotate(90deg);
 }
 
 .cursor {

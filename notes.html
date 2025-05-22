@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes - Volttome</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .notes-container {
+            margin: 20px 0;
+        }
+
+        .notes-textarea {
+            background: transparent;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 10px;
+            width: 100%;
+            height: 200px;
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+
+        .notes-textarea:focus {
+            outline: none;
+            box-shadow: 0 0 5px #00ff00;
+        }
+
+        .save-button {
+            background: transparent;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+        }
+
+        .save-button:hover {
+            background: #00ff00;
+            color: #000;
+        }
+
+        .save-message {
+            color: #00ff00;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .back-button {
+            background: transparent;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .back-button:hover {
+            background: #00ff00;
+            color: #000;
+        }
+
+        .user-info {
+            color: #00ff00;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="crt">
+        <div class="content">
+            <h1>Volttome Notes</h1>
+            <div class="user-info" id="userInfo"></div>
+            <button class="back-button" onclick="window.location.replace('main.html')">← Back</button>
+            <div class="notes-container">
+                <textarea class="notes-textarea" id="notes" placeholder="Write your notes here..."></textarea>
+                <button class="save-button" onclick="saveNotes()">Save Notes</button>
+                <p class="save-message" id="saveMessage">Notes saved successfully!</p>
+            </div>
+            <div class="cursor">_</div>
+        </div>
+        <div class="scanlines"></div>
+    </div>
+    <script src="crt.js"></script>
+    <script>
+        // Check if logged in and session is valid
+        function checkSession() {
+            const sessionData = localStorage.getItem('sessionData');
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+            if (!sessionData || !isLoggedIn || isLoggedIn !== 'true') {
+                clearSession();
+                window.location.replace('login.html');
+                return false;
+            }
+
+            try {
+                const session = JSON.parse(sessionData);
+                const loginTime = new Date(session.loginTime);
+                const now = new Date();
+
+                // Check if session is older than 24 hours
+                if (now - loginTime > 24 * 60 * 60 * 1000) {
+                    clearSession();
+                    window.location.replace('login.html');
+                    return false;
+                }
+
+                // Display user info
+                document.getElementById('userInfo').textContent = `Logged in as: ${session.username}`;
+                return true;
+            } catch (e) {
+                clearSession();
+                window.location.replace('login.html');
+                return false;
+            }
+        }
+
+        function clearSession() {
+            localStorage.removeItem('sessionData');
+            localStorage.removeItem('isLoggedIn');
+        }
+
+        // Check session on page load
+        if (!checkSession()) {
+            // If session is invalid, the page will redirect to login
+            return;
+        }
+
+        // Load saved notes
+        const savedNotes = localStorage.getItem('volttomeNotes');
+        if (savedNotes) {
+            document.getElementById('notes').value = savedNotes;
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('notes').value;
+            localStorage.setItem('volttomeNotes', notes);
+
+            // Show save message
+            const saveMessage = document.getElementById('saveMessage');
+            saveMessage.style.display = 'block';
+            setTimeout(() => {
+                saveMessage.style.display = 'none';
+            }, 2000);
+        }
+
+        // Check session periodically
+        setInterval(checkSession, 60000); // Check every minute
+    </script>
+</body>
+
+</html>

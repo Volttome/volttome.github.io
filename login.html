@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Volttome</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-input {
+            background: transparent;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 10px;
+            margin: 10px 0;
+            width: 200px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .login-input:focus {
+            outline: none;
+            box-shadow: 0 0 5px #00ff00;
+        }
+
+        .login-button {
+            background: transparent;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+        }
+
+        .login-button:hover {
+            background: #00ff00;
+            color: #000;
+        }
+
+        .error-message {
+            color: #ff0000;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .clear-cache-button {
+            background: transparent;
+            border: 1px solid #ff0000;
+            color: #ff0000;
+            padding: 5px 10px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+            font-size: 12px;
+        }
+
+        .clear-cache-button:hover {
+            background: #ff0000;
+            color: #000;
+        }
+
+        .login-status {
+            color: #00ff00;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="crt">
+        <div class="content">
+            <h1>Volttome</h1>
+            <div class="login-form">
+                <input type="text" class="login-input" id="username" placeholder="Username" autocomplete="off">
+                <br>
+                <input type="password" class="login-input" id="password" placeholder="Password" autocomplete="off">
+                <br>
+                <button class="login-button" onclick="checkLogin()">Login</button>
+                <p class="error-message" id="error">Invalid username or password!</p>
+                <p class="login-status" id="loginStatus">Logging in...</p>
+                <button class="clear-cache-button" onclick="clearCache()">Clear Cache & Reload</button>
+            </div>
+            <div class="cursor">_</div>
+        </div>
+        <div class="scanlines"></div>
+    </div>
+    <script src="crt.js"></script>
+    <script>
+        // Clear any existing session on page load
+        clearCache();
+
+        // Add loading state
+        let isLoggingIn = false;
+
+        function checkLogin() {
+            if (isLoggingIn) return;
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const error = document.getElementById('error');
+            const loginStatus = document.getElementById('loginStatus');
+
+            // Basic validation
+            if (!username || !password) {
+                error.textContent = 'Please enter both username and password!';
+                error.style.display = 'block';
+                return;
+            }
+
+            // Show loading state
+            isLoggingIn = true;
+            error.style.display = 'none';
+            loginStatus.style.display = 'block';
+
+            // Simulate server delay for better UX
+            setTimeout(() => {
+                // Check credentials
+                if (username === "Volttome" && password === "sadra kiramo bokhor") {
+                    // Set session data
+                    const sessionData = {
+                        username: username,
+                        loginTime: new Date().toISOString(),
+                        sessionId: Math.random().toString(36).substring(7)
+                    };
+
+                    // Store session data
+                    localStorage.setItem('sessionData', JSON.stringify(sessionData));
+                    localStorage.setItem('isLoggedIn', 'true');
+
+                    // Redirect to main page
+                    window.location.replace('main.html');
+                } else {
+                    error.textContent = 'Invalid username or password!';
+                    error.style.display = 'block';
+                    loginStatus.style.display = 'none';
+                    isLoggingIn = false;
+                }
+            }, 1000);
+        }
+
+        function clearCache() {
+            // Clear all storage
+            localStorage.clear();
+            sessionStorage.clear();
+
+            // Clear form fields
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('loginStatus').style.display = 'none';
+        }
+
+        // Handle Enter key
+        document.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkLogin();
+            }
+        });
+
+        // Prevent form submission on Enter
+        document.querySelector('.login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+
+</html>
